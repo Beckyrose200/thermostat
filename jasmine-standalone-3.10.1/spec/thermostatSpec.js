@@ -9,27 +9,30 @@ describe ('Thermostat',function(){
     });
 
     it('increase the temperature up', function(){
-      expect(thermostat.temperatureUp(5)).toEqual(25)
+      thermostat.temperatureUp(5)
+      expect(thermostat.temperature()).toEqual(25)
     });
 
     it('decrease the temperature', function(){
-      expect(thermostat.temperatureDown(10)).toEqual(10)
-    });
-
-    it('has a minimum temp of 10', function(){
-      expect(thermostat.minTemp).toEqual(10)
+      thermostat.temperatureDown(10)
+      expect(thermostat.temperature()).toEqual(10)
     });
 
     it('doesnt allow the temp to go below the minimum', function(){
-      expect(thermostat.temperatureDown(20)).toEqual(10)
+      thermostat.temperatureDown(20)
+      expect(thermostat.temperature()).toEqual(10)
     });
 
     it('on power saving mode, max temp 25 deg', function(){
-      expect(thermostat.powerSavingModeOn()).toEqual(25)
+      thermostat.powerSavingModeOn()
+      thermostat.temperatureUp(10)
+      expect(thermostat.temperature()).toEqual(25)
     });
 
     it('on power saving mode off, max temp 32 deg', function(){
-      expect(thermostat.powerSavingModeOff()).toEqual(32)
+      thermostat.powerSavingModeOff()
+      thermostat.temperatureUp(15)
+      expect(thermostat.temperature()).toEqual(32)
     });
 
     it('power saving mode is on by default', function(){
@@ -37,18 +40,22 @@ describe ('Thermostat',function(){
     });
 
     it('reset the temperature', function(){
-      expect(thermostat.reset()).toEqual(20)
+      thermostat.temperatureUp(5)
+      thermostat.reset()
+      expect(thermostat.temperature()).toEqual(20)
     });
 
     it('medium usage', function(){
-      console.log('medium-usage <=25', thermostat.usage());
-      expect(thermostat.usage()).toEqual('Medium-usage')
+      expect(thermostat.usage()).toEqual('medium-usage')
     });
+
     it('low usage', function(){
       thermostat.temperatureDown(5)
       expect(thermostat.usage()).toEqual('low-usage')
     });
+    
     it('high usage', function(){
+      thermostat.powerSavingModeOff()
       thermostat.temperatureUp(6)
       expect(thermostat.usage()).toEqual('high-usage')
     });

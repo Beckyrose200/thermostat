@@ -2,48 +2,49 @@ class Thermostat {
   constructor(temp) {
     this.startTemp = 20; 
     this.minTemp = 10;
-    this.MaxTemp = 0; 
+    this.currentTemp = 20; 
     this.powerSavingModeOn();
   }
 
   temperature(){
-    return this.startTemp;
+    return this.currentTemp;
   }
 
   temperatureUp(number){
-    return this.startTemp += number;
+    if ((this.currentTemp + number) > this.MaxTemp){
+     this.currentTemp = this.MaxTemp
+    } else {
+        this.currentTemp += number;
+    }
   }
 
   temperatureDown(number) { 
-    if ((this.startTemp - number) < this.minTemp){
-      return this.minTemp;
-    }
-    else {
-      return this.startTemp -= number;
+    if ((this.currentTemp - number) < this.minTemp){
+      this.currentTemp = this.minTemp;
+    } else {
+        this.currentTemp -= number;
     }
   }
 
   powerSavingModeOn(){
-    return this.MaxTemp = 25;
+    this.MaxTemp = 25;
   }
 
   powerSavingModeOff(){
-    return this.MaxTemp = 32;
+    this.MaxTemp = 32;
   }
 
   reset(){
-    return this.startTemp;
+    this.currentTemp = this.startTemp;
   }
 
   usage(){
-    if (this.startTemp < 18 ) {
+    if (this.currentTemp < 18 ) {
       return 'low-usage'
-    }
-    else if (this.startTemp <= 25){
-      return 'Medium-usage';
-    }
-    else {
-      return 'high-usage';
+    } else if (this.currentTemp <= 25){
+        return 'medium-usage';
+    } else {
+        return 'high-usage';
     }
   }
 }
