@@ -34,7 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('psm_off').style.background = 'blue'
   })
 
-
+  fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=a3d9eb01d4de82b9b8d0849ef604dbed')
+  .then((response) => {
+    return response.json()
+  })
+  .then((data) => {
+    document.getElementById('weather').innerText = data.main.temp
+  });
 })
 
 
